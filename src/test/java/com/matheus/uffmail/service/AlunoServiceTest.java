@@ -6,11 +6,14 @@ import com.matheus.uffmail.model.AppException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import org.junit.Rule;
 
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -21,6 +24,9 @@ public class AlunoServiceTest {
     AlunoService alunoService = new AlunoService();
     AlunosDao alunosDao;
     Aluno aluno = new Aluno();
+    
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none(); 
 
     @Before
     public void setUp() {
@@ -43,9 +49,8 @@ public class AlunoServiceTest {
         aluno.setNome("Matheus Leal");
         aluno.setStatus("Ativo");
         aluno.setUffMail("");
-        int resposta = alunoService.getChecar(aluno);
-
-        Assert.assertTrue("Quando coloco aluno como ativo espera resultado 4, nessa obteve: " + resposta, resposta == 4 );
+        
+        alunoService.getChecar(aluno);
     }
 
     //Quando aluno esta Invativo e não possui UffMail
@@ -54,9 +59,12 @@ public class AlunoServiceTest {
         aluno.setNome("Matheus Leal");
         aluno.setStatus("Inativo");
         aluno.setUffMail("");
-        int resposta = alunoService.getChecar(aluno);
-
-        Assert.assertTrue("Quando coloco aluno como inativo espera resultado 2, nessa obteve: " + resposta, resposta == 2 );
+        
+        String esperado = "Aluno(a) "+aluno.getNome()+" se encontra inativo!";
+        expectedException.expect(AppException.class);
+        expectedException.expectMessage(esperado);
+        
+        alunoService.getChecar(aluno);
     }
 
 
@@ -66,19 +74,25 @@ public class AlunoServiceTest {
         aluno.setNome("Matheus Leal");
         aluno.setStatus("Ativo");
         aluno.setUffMail("teste@id.uff.br");
-        int resposta = alunoService.getChecar(aluno);
-
-        Assert.assertTrue("Quando coloco aluno como ativo e com uffmail espera resultado 1, nessa obteve: " + resposta, resposta == 1 );
+        
+        String esperado = "Aluno(a) "+aluno.getNome()+" já possui UFFMail!";
+        expectedException.expect(AppException.class);
+        expectedException.expectMessage(esperado);
+        
+        alunoService.getChecar(aluno);
     }
     
     //Aluno não encontrado
     @Test
     public void teste_checar4() throws AppException{
         aluno = null;
-
-        int resposta = alunoService.getChecar(aluno);
-
-        Assert.assertTrue("Quando coloco aluno como null espera resultado 0, nessa obteve: " + resposta, resposta == 0 );
+        
+        String esperado = "Entrada com matricula errada!";
+        expectedException.expect(AppException.class);
+        expectedException.expectMessage(esperado);
+        
+        
+        alunoService.getChecar(aluno);
     }
 
 

@@ -29,7 +29,7 @@ public class AlunoService {
         return 1;
     }
 
-    public int getChecar(Aluno aluno) throws AppException{
+    public void getChecar(Aluno aluno) throws AppException{
         if(aluno == null) { //Entrada foi diferente do padrão ou aluno não encontrado
             throw new AppException("Entrada com matricula errada!");
         }else if (!aluno.getUffMail().equals("")) { //Aluno(a) já possui UFFMail;
@@ -37,7 +37,6 @@ public class AlunoService {
         } else if (!aluno.getStatus().equals("Ativo")) { //Aluno(a) se encontra inativo;
             throw new AppException("Aluno(a) "+aluno.getNome()+" se encontra inativo!");
         }
-        return 0;
     } 
 
 }
