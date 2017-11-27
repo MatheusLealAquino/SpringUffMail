@@ -36,26 +36,19 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-
-                <div th:switch="${gerarMail}">
-                    <div th:case="0"> <p>Entrada com matricula errada!</p> </div>
-                    <div th:case="1"> <p th:text="'Aluno(a) '+ ${alunos.nome} +' já possui UFFMail!'" /> </div>
-                    <div th:case="2"> <p th:text="'Aluno(a) '+ ${alunos.nome} +' se encontra inativo!'"/> </div>
-                    <div th:case="3"> <p th:text="'Aluno(a) '+ ${alunos.nome} +' se encontra inativo!'"/> </div>
                     
-                    <form th:case="4" method="POST" th:action="@{/criado}" style="margin: 20px 0">
-                        <p th:text="${alunos.nome} + ', por favor escolha uma das opções abaixo para o seu UFFMail.'" />
-                        <div class="form-group">
-                            <tr th:each="email : ${alunos.gerarUffMail}">
-                                <div class="radio">
-                                    <input type="radio" th:name="email" th:value="${email}" /><p th:text="${email}"></p>
-                                </div><br>
-                            </tr>
-                        </div>
-                        <input type="hidden" class="form-control" placeholder="Nome" th:value="${alunos.matricula}" th:name="matricula"/>
-                        <button type="submit" class="btn btn-primary pull-left">Enviar</button>
-                    </form>
-                </div>
+                <form th:case="4" method="POST" th:action="@{/criado}" style="margin: 20px 0">
+                    <p th:text="${alunos.nome} + ', por favor escolha uma das opções abaixo para o seu UFFMail.'" />
+                    <div class="form-group">
+                        <tr th:each="email : ${alunos.gerarUffMail}">
+                            <div class="radio">
+                                <input type="radio" th:name="email" th:value="${email}" /><p th:text="${email}"></p>
+                            </div><br>
+                        </tr>
+                    </div>
+                    <input type="hidden" class="form-control" placeholder="Nome" th:value="${alunos.matricula}" th:name="matricula"/>
+                    <button type="submit" class="btn btn-primary pull-left">Enviar</button>
+                </form>
                 
             </div>
         </div>

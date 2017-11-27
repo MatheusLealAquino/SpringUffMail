@@ -2,6 +2,7 @@ package com.matheus.uffmail.service;
 
 import com.matheus.uffmail.dao.AlunosDao;
 import com.matheus.uffmail.model.Aluno;
+import com.matheus.uffmail.model.AppException;
 import org.omg.PortableInterceptor.INACTIVE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,19 +29,15 @@ public class AlunoService {
         return 1;
     }
 
-    public Integer getChecar(Aluno aluno){
-        int resultado = 0;
-        
+    public int getChecar(Aluno aluno) throws AppException{
         if(aluno == null) { //Entrada foi diferente do padrão ou aluno não encontrado
-            return 0; 
+            throw new AppException("Entrada com matricula errada!");
         }else if (!aluno.getUffMail().equals("")) { //Aluno(a) já possui UFFMail;
-            resultado += 1;
+            throw new AppException("Aluno(a) "+aluno.getNome()+" já possui UFFMail!");
         } else if (!aluno.getStatus().equals("Ativo")) { //Aluno(a) se encontra inativo;
-            resultado +=  2; 
-        } else { //Tudo certo
-            return 4; 
+            throw new AppException("Aluno(a) "+aluno.getNome()+" se encontra inativo!");
         }
-        return resultado; //Se return ter resultado igual a 3, aluno esta inativo e já possui uffMail
-    }
+        return 0;
+    } 
 
 }

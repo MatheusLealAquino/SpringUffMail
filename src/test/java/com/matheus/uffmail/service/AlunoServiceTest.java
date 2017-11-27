@@ -2,6 +2,7 @@ package com.matheus.uffmail.service;
 
 import com.matheus.uffmail.dao.AlunosDao;
 import com.matheus.uffmail.model.Aluno;
+import com.matheus.uffmail.model.AppException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class AlunoServiceTest {
 
     //Quando aluno esta Ativo e não possui UffMail
     @Test
-    public void teste_checar1(){
+    public void teste_checar1() throws AppException{
         aluno.setNome("Matheus Leal");
         aluno.setStatus("Ativo");
         aluno.setUffMail("");
@@ -49,7 +50,7 @@ public class AlunoServiceTest {
 
     //Quando aluno esta Invativo e não possui UffMail
     @Test
-    public void teste_checar2(){
+    public void teste_checar2() throws AppException{
         aluno.setNome("Matheus Leal");
         aluno.setStatus("Inativo");
         aluno.setUffMail("");
@@ -61,7 +62,7 @@ public class AlunoServiceTest {
 
     //Quando aluno esta Ativo e possui UffMail
     @Test
-    public void teste_checar3(){
+    public void teste_checar3() throws AppException{
         aluno.setNome("Matheus Leal");
         aluno.setStatus("Ativo");
         aluno.setUffMail("teste@id.uff.br");
@@ -69,9 +70,10 @@ public class AlunoServiceTest {
 
         Assert.assertTrue("Quando coloco aluno como ativo e com uffmail espera resultado 1, nessa obteve: " + resposta, resposta == 1 );
     }
-
+    
+    //Aluno não encontrado
     @Test
-    public void teste_checar4(){
+    public void teste_checar4() throws AppException{
         aluno = null;
 
         int resposta = alunoService.getChecar(aluno);

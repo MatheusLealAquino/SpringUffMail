@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width" />
 
-    <title>Gerar UFFMail</title>
+    <title>ERROR</title>
     
     <link th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" />
 </head>
@@ -36,20 +36,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                    
-                <form th:case="4" method="POST" th:action="@{/criado}" style="margin: 20px 0">
-                    <p th:text="${alunos.nome} + ', por favor escolha uma das opções abaixo para o seu UFFMail.'" />
-                    <div class="form-group">
-                        <tr th:each="email : ${alunos.gerarUffMail}">
-                            <div class="radio">
-                                <input type="radio" th:name="email" th:value="${email}" /><p th:text="${email}"></p>
-                            </div><br>
-                        </tr>
-                    </div>
-                    <input type="hidden" class="form-control" placeholder="Nome" th:value="${alunos.matricula}" th:name="matricula"/>
-                    <button type="submit" class="btn btn-primary pull-left">Enviar</button>
-                </form>
-                
+                <h4 th:text="${error.message}"/>
             </div>
         </div>
     </div>
@@ -57,3 +44,4 @@
 </section>
 </body>
 </html>
+
